@@ -19,7 +19,7 @@ export const getUser=createAsyncThunk("user/me",async(_, thunkAPI)=>{
 
 
 
-const authSlice=createSlice({
+export const authSlice=createSlice({
     name:"auth",
     initialState:{
         authUser:null,
@@ -49,6 +49,6 @@ const authSlice=createSlice({
     
 });
 
-export const {setOnlineUser} =authSlice.actions;
+export const {setOnlineUser} = authSlice.actions;
 
-export default authSlice.reducer;
+export default authSlice.reducer; 
