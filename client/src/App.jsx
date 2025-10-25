@@ -6,7 +6,7 @@ import { Loader } from 'lucide-react';
 import {useDispatch, useSelector} from "react-redux"
 import { useEffect } from 'react';
 import {getUser, setOnlineUser} from "./store/slices/authSlice.js"
-import { connectSocker, disconnectSocket } from './lab/socket.js';
+import { connectSocket, disconnectSocket } from './lab/socket.js';
 import {BrowserRouter as Router , Routes,Route, Navigate} from "react-router-dom";
 import NavBar from "./components/skeletons/NavBar.jsx";
 import Home from "./pages/Home.jsx";
@@ -32,9 +32,9 @@ function App() {
 
   useEffect(()=>{
     if(authUser){
-      const socket=connectSocker(authUser._id);
+      const socket=connectSocket(authUser._id);
       socket.on("getOnlineUsers",(users)=>{
-        dispatch(setOnlineUser())
+        dispatch(setOnlineUser(users))
       });
 
       return ()=>disconnectSocket();
@@ -56,8 +56,8 @@ return(
       <NavBar />
       <Routes>
         <Route  path='/' element={authUser ? <Home/>: <Navigate to={"/login"} />}/>
-        <Route  path='/register' element={authUser ? <Register/>: <Navigate to={"/"} />}/>
-        <Route  path='/login' element={authUser ? <Login/>: <Navigate to={"/"} />}/>
+        <Route  path='/register' element={!authUser ? <Register/>: <Navigate to={"/"} />}/>
+        <Route  path='/login' element={!authUser ? <Login/>: <Navigate to={"/"} />}/>
         <Route  path='/profile' element={authUser ? <Profile/>: <Navigate to={"/login"} />}/>
       </Routes>
       <ToastContainer />
