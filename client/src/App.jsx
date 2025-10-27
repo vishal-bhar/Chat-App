@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import {getUser, setOnlineUser} from "./store/slices/authSlice.js"
 import { connectSocket, disconnectSocket } from './lab/socket.js';
 import {BrowserRouter as Router , Routes,Route, Navigate} from "react-router-dom";
-import NavBar from "./components/skeletons/NavBar.jsx";
+import NavBar from "./components/NavBar.jsx";
 import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";

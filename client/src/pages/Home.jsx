@@ -1,11 +1,13 @@
 
 
-import SideBar from "../components/skeletons/SideBar"; 
+import ChatContainer from "../components/ChatContainer";
+import NoChatSelected from "../components/NoChatSelected";
+import SideBar from "../components/SideBar"; 
 import {useSelector} from "react-redux";
 
 const Home=()=> {
 
-  const {selectUser}=useSelector()
+  const {selectUser}=useSelector(state=>state.chat);
 
 
   return (
@@ -15,6 +17,9 @@ const Home=()=> {
     <div className="bg-white rounded-lg shadow-md w-full max-w-6xl h-[calc(100vh-8rem)]">
       <div className="flex h-full rounded-lg overflow-hidden">
         <SideBar />
+
+        {!selectUser  ? <NoChatSelected /> : <ChatContainer />}
+
       </div>
     </div>
   </div>

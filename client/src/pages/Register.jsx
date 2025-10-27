@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Link} from "react-router-dom";
-import AuthImagePattern from "../components/skeletons/AuthImagePattern";
+import AuthImagePattern from "../components/AuthImagePattern";
 import { signUp } from "../store/slices/authSlice";
 
 const Register = () => {
