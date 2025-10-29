@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 
 const Home=()=> {
 
-  const {selectUser}=useSelector(state=>state.chat);
+  const {selectedUser}=useSelector(state=>state.chat);
 
 
   return (
@@ -18,7 +18,7 @@ const Home=()=> {
       <div className="flex h-full rounded-lg overflow-hidden">
         <SideBar />
 
-        {!selectUser  ? <NoChatSelected /> : <ChatContainer />}
+        {!selectedUser  ? <NoChatSelected /> : <ChatContainer />}
 
       </div>
     </div>

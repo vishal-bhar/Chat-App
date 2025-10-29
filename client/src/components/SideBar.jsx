@@ -6,9 +6,7 @@ import { User } from "lucide-react";
 
 function SideBar() {
   const [showOnlineOnly, setshowOnlineOnly] = useState(false);
-  const { users, selectedUser, isUsersLoading } = useSelector(
-    (state) => state.chat
-  );
+  const { users, selectedUser, isUsersLoading } = useSelector((state) => state.chat);
 
   const { onlineUsers } = useSelector((state) => state.auth);
 
@@ -18,11 +16,16 @@ function SideBar() {
     dispatch(getUsers());
   }, [dispatch]);
 
-const filteredUsers=showOnlineOnly ? users?.filter((user)=>onlineUsers.includes(user._id)): users;
+const filteredUsers=showOnlineOnly
+? users?.filter((user)=>onlineUsers.includes(user._id))
+: users;
 
-  if (!onlineUsers) return <SidebarSkeleton />;
+console.log(filteredUsers)
+
+  if (isUsersLoading) return <SidebarSkeleton />;
 
   return (
+  
     <>
       <aside className="h-full w-20 lg:w-72 border-r border-gray-200 flex flex-col transition-all duration-200 bg-white">
         {/* Header */}
@@ -41,12 +44,13 @@ const filteredUsers=showOnlineOnly ? users?.filter((user)=>onlineUsers.includes(
               <input
                 type="checkbox"
                 checked={showOnlineOnly}
-                onChange={(e) => setshowOnlineOnly(e.target.value)}
+                onChange={(e) => setshowOnlineOnly(e.target.checked)}
                 className="w-4 h-4 border-gray-700 text-blue-600 focus:ring-blue-500"
               />
               Show online Only
             </label>
             <span className="text-xs text-gray-500">
+              {/* is masle ko solve karege */}
               ({onlineUsers.length - 1} online)
             </span>
           </div>
@@ -57,11 +61,11 @@ const filteredUsers=showOnlineOnly ? users?.filter((user)=>onlineUsers.includes(
         <div className="overflow-y-auto w-full py-3">
           {filteredUsers?.length > 0 &&
             filteredUsers.map((user) => {
-              <button
+              return (<button
                 key={user._id}
                 onClick={() => dispatch(setSelectedUser(user))}
                 className={`w-full p-3 flex-center gap-3 transition-colors rounded-md ${
-                  selectedUser?._id === user._id
+                  selectedUser?._Id === user._id
                     ? "bg-gray-200 ring-gray-200"
                     : "hover:bg-gray-200"
                 }`}
@@ -70,7 +74,7 @@ const filteredUsers=showOnlineOnly ? users?.filter((user)=>onlineUsers.includes(
 
                 <div className="relative mx-auto lg:mx-0">
                   <img
-                    src={user?.avatar?.url || "./avatar/vite.svg"}
+                    src={user?.avatar?.url || ""}
                     alt="./avatar/vite.svg"
                     className="w-12 h-12 object-cover rounded-full"
                   />
@@ -89,13 +93,13 @@ const filteredUsers=showOnlineOnly ? users?.filter((user)=>onlineUsers.includes(
                   </div>
                   </div>
              
-              </button>;
+              </button>);
             })}
 
             {
-              filteredUsers?.length===0 && (
+              filteredUsers?.length === 0 && (
                 <div className="text-center text-gray-500 py-4">
-                  no Online User
+                  No Online User
                 </div>
               )
             }

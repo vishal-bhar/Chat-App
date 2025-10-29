@@ -7,10 +7,11 @@ import { toast } from "react-toastify";
 export const getUsers=createAsyncThunk("chat/getUsers", async(_, thunkAPI)=>{
     try {
         const res =await axiosInstance("/message/users");
-        return res.data;
+        console.log(res.data)
+        return res.data.users;
     } catch (error) {
-        toast.error(error.response.messages);
-        return thunkAPI.rejectWithValue(error.response.data.messages);
+        toast.error(error.response?.data?.message);
+        return thunkAPI.rejectWithValue(error.response?.data?.messages);
     }
 }) 
 
@@ -36,7 +37,8 @@ export const chatSlice =createSlice({
     },
 
     extraReducers:(builder)=>{
-        builder.addCase(getUsers.pending,(state)=>{
+        builder
+        .addCase(getUsers.pending,(state)=>{
             state.isUsersLoading=true;
         })
         .addCase(getUsers.fulfilled,(state,action)=>{
