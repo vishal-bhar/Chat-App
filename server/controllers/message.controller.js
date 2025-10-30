@@ -6,7 +6,7 @@ import { getReciverSockerId } from "../utils/socket.js";
 
 
 
-export const getAllUser=catchAsyncError(async(req,res,next)=>{
+export const getAllUsers=catchAsyncError(async(req,res,next)=>{
     const user=req.user;
     const filteredUsers=await User.find({_id:{$ne:user}}).select("-password");
     res.status(200).json({
@@ -14,7 +14,7 @@ export const getAllUser=catchAsyncError(async(req,res,next)=>{
         users:filteredUsers,
     });
 });
-export const getMessagesr=catchAsyncError(async(req,res,next)=>{
+export const getMessages=catchAsyncError(async(req,res,next)=>{
     const receiverId=req.params.id;
     const myId=req.user._id
     const reciver=await User.findById(receiverId);
