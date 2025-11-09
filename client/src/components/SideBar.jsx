@@ -51,7 +51,7 @@ console.log(filteredUsers)
             </label>
             <span className="text-xs text-gray-500">
               {/* is masle ko solve karege */}
-              ({onlineUsers.length - 1} online)
+              ({onlineUsers?.length - 1} online)
             </span>
           </div>
         </div>
@@ -78,7 +78,7 @@ console.log(filteredUsers)
                     alt="./avatar/vite.svg"
                     className="w-12 h-12 object-cover rounded-full"
                   />
-                  {onlineUsers.includes(user._id) && (
+                  {onlineUsers?.includes(user._id) && (
                     <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white" />
                   )}
                 </div>
@@ -89,7 +89,7 @@ console.log(filteredUsers)
                       {user.fullName}
                     </div>
                   <div className="text-sm text-gray-500">
-                    {onlineUsers.includes(user._id) ? "Online" : "Offline"}
+                    {onlineUsers?.includes(user._id) ? "Online" : "Offline"}
                   </div>
                   </div>
              

@@ -1,6 +1,7 @@
 import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setOnlineUser } from "../store/slices/authSlice";
+import { setSelectedUser } from "../store/slices/chatSlice";
 
 function ChatHader() {
   const { selectedUser } = useSelector((state) => state.chat);
@@ -20,7 +21,7 @@ function ChatHader() {
                 alt="/avatar-holder-avif"
                 className="w-full h-full object-cover rounded-full"
               />
-              {onlineUsers.includes(selectedUser._id) && (
+              {onlineUsers?.includes(selectedUser._id) && (
                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-white border-2 rounded-full" />
               )}
             </div>
@@ -28,19 +29,21 @@ function ChatHader() {
             {/* Name and Status */}
 
             <div>
-              <h3 className="font-medium text-base text-black"></h3>
+              <h3 className="font-medium text-base text-black">
+                {selectedUser?.fullName}
+              </h3>
               <p className="text-sm text-black">
-                {onlineUsers.includes(selectedUser?._id) ? "Online" : "Offline"}
+                {onlineUsers?.includes(selectedUser?._id) ? "Online" : "Offline"}
               </p>
             </div>
           </div>
 
           {/* Close Button */}
           <button
-            onClick={() => dispatch(setOnlineUser(null))}
+            onClick={() => dispatch(setSelectedUser(null))}
             className="text-gray-800 hover:text-black transition"
           >
-            <X />
+            <X className="w-5 h-5"/>
           </button>
         </div>
       </div>

@@ -4,6 +4,9 @@ import {useDispatch,useSelector} from  "react-redux"
 import { getMessages } from "../store/slices/chatSlice";
 import {getSocket} from "../lab/socket"
 import MessageInput from "./MessageInput";
+import ChatHeader from "./ChatHeader";
+import MessageSkeleton from "./skeletons/MessageSkeleton";
+
 
 
 
@@ -46,7 +49,7 @@ useEffect(()=>{
 if(isMessagesLoading){
   return (
     <div className="flex-1 flex flex-col overflow-hidden bg-white">
-      <chatHeader />
+      <ChatHeader />
       <MessageSkeleton />
       <MessageInput />
     </div>
@@ -58,8 +61,8 @@ if(isMessagesLoading){
 
   return (
    <>
-   <div className="flex flex flex-col overflow-hidden bg-white">
-    <chatHeader />
+   <div className="w-full flex flex-col overflow-hidden bg-white">
+    <ChatHeader />
 
 {/* Message */}
 
@@ -123,3 +126,5 @@ if(isMessagesLoading){
 };
 
 export default ChatContainer
+
+

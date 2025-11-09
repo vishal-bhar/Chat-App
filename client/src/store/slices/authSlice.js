@@ -52,8 +52,19 @@ export const signUp=createAsyncThunk("user/sign-up",async(data,thunkAPI)=>{
         toast.error(error.response.data.message);
         return thunkAPI.rejectWithValue(error.response.data.message)
     }
+});
 
-})
+export const updateProfile=createAsyncThunk("user/update-profile",
+    async(data,thunkAPI)=>{
+        try {
+            const res=await axiosInstance.put("/user/update-profile",data);
+            toast.success("profile updae successfully");
+        } catch (error) {
+            toast.error(error.response.data.message);
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
+    }
+)
 
  export const authSlice=createSlice({
     name:"auth",
@@ -106,6 +117,16 @@ export const signUp=createAsyncThunk("user/sign-up",async(data,thunkAPI)=>{
             })
             .addCase(signUp.rejected,(state)=>{
                 state.isSigningup=false
+            })
+              .addCase(updateProfile.pending,(state)=>{
+                state.isUpdatingProfile=true;
+            })
+            .addCase(updateProfile.fulfilled,(state,action)=>{
+                state.authUser=action.payload;
+                state.isUpdatingProfile=false;
+            })
+            .addCase(updateProfile.rejected,(state)=>{
+                state.isUpdatingProfile=false
             })
     },
     

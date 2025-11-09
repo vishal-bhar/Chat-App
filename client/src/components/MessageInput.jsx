@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify";
 import { getSocket } from "../lab/socket";
-import { Send, X } from "lucide-react";
+import { Send, X,Image } from "lucide-react";
+import { sendMessage } from "../store/slices/chatSlice";
 
 
 
@@ -23,7 +24,7 @@ function MessageInput() {
     setMedia(file);
     const type=file.type;
 
-    if(type.startWith("image/")){
+    if(type.startsWith("image/")){
       setMediaType("image");
       const render=new FileReader();
       render.onload=()=>{
@@ -51,7 +52,7 @@ const removeMedia=()=>{
   if(fileInputRef.current)fileInputRef.current.value="";
 };
 
-const handalSendMessage=async (e)=>{
+const handalSendMessage=async(e)=>{
   e.preventDefault();
 
   if(!text.trim() && !media) return;
@@ -60,7 +61,7 @@ const handalSendMessage=async (e)=>{
   data.append("text",text.trim());
   data.append("media",media);
 
-  // dispatch(sendMessage(data));
+  dispatch(sendMessage(data));
 
   // Reset All
 setText('');
@@ -121,22 +122,29 @@ useEffect(()=>{
           <div className="flex-1 flex gap-2">
             <input 
             type="text"
-            accept="image/*,/video/*"
-            ref={fileInputRef}
-            className="hidden"
+            placeholder="Type a messagge ......"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base" 
+            value={text}
+            onChange={(e)=>setText(e.target.value)}
+            />
+           <input 
+            type="file"
+          accept="image/*,video/*"
+          ref={fileInputRef}
+            className="hidden" 
             onChange={handalMediaChange}
             />
             <button
             type="button"
             onClick={()=>fileInputRef.current?.click()}
-            className={`hidden sm:flex items-center justify-center w-10 h-10 rounded-full border-gray-300 hover:border-gray-100 transition 
+            className={`hidden sm:flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 hover:border-gray-100 transition 
               ${mediaPreview ? "text-emerald-500" : "text-gray-400"}`}
             >
               <Image size={20} />
             </button>
           </div>
           <button type="submit" 
-          className="w-10 h-10 flex items-center rounded-full bg-blue-600 text-white hover:bg-blue-700 transition disabled:opacity-50"
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 transition disabled:opacity-50"
           disabled={!text.trim() && !media}
           >
             <Send size={22}/>
